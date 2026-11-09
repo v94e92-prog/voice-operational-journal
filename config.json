@@ -1,0 +1,16 @@
+{
+  "organization": "ООО «Предприятие» (укажите наименование)",
+  "department": "Подстанция 6 кВ, оперативный персонал (укажите подразделение)",
+  "journal_template": "oper_journal",
+  "host": "127.0.0.1",
+  "port": 8000,
+  "open_browser": true,
+  "asr": {
+    "engine": "whisper",
+    "whisper_model": "small",
+    "whisper_device": "cpu",
+    "whisper_compute_type": "int8",
+    "gigaam_model": "v3_e2e_rnnt",
+    "test_text": "Отключен выключатель ку один 6 киловольт по команде диспетчера Смирнова. Включены заземляющие ножи."
+  }
+}

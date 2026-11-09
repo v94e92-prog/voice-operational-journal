@@ -1,0 +1,7 @@
+fastapi>=0.115
+uvicorn>=0.30
+python-multipart>=0.0.9
+openpyxl>=3.1
+rapidfuzz>=3.0
+requests>=2.31
+faster-whisper>=1.1

@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Оперативный журнал</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+<header class="topbar">
+  <div>
+    <div class="brand-title" id="journalName">Оперативный журнал</div>
+    <div class="brand-sub" id="orgLine"></div>
+  </div>
+  <div class="top-actions">
+    <button class="btn ghost" id="btnVerify" type="button">Проверить целостность</button>
+    <a class="btn ghost" id="btnExport" href="/api/export.xlsx">Выгрузить в Excel</a>
+    <a class="btn ghost" href="/admin">Администрирование</a>
+  </div>
+</header>
+
+<section class="shiftbar" id="shiftBar"></section>
+
+<main class="layout">
+  <section class="card input-card" id="inputCard">
+    <div class="correction-banner hidden" id="corrBanner">
+      <div id="corrText"></div>
+      <button class="btn small" type="button" id="btnCorrCancel">Отмена</button>
+    </div>
+
+    <div class="mic-row">
+      <button class="mic" id="btnMic" type="button" aria-label="Начать запись голоса">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><path d="M12 17v4"/><path d="M8 21h8"/>
+        </svg>
+      </button>
+      <div class="mic-info">
+        <div class="mic-status" id="micStatus">Нажмите и говорите</div>
+        <div class="mic-hint" id="asrInfo">Нажмите ещё раз, чтобы закончить. Клавиша F2 — то же самое.</div>
+      </div>
+      <div class="timer" id="micTimer">0:00</div>
+    </div>
+
+    <label class="field-label" for="entryText">Текст записи</label>
+    <textarea id="entryText" placeholder="Продиктуйте или напечатайте запись. Можно диктовать частями — текст допишется."></textarea>
+
+    <div class="preview" id="preview">
+      <div class="pv-row">
+        <span class="pv-label">Вид записи</span>
+        <select id="kindSel"></select>
+      </div>
+      <div class="pv-row hidden" id="equipRow">
+        <span class="pv-label">Оборудование</span>
+        <div class="chips" id="equipChips"></div>
+      </div>
+      <div id="notes"></div>
+    </div>
+
+    <div class="row-opts">
+      <label class="check"><input type="checkbox" id="chkMissed"> Пропущенная запись</label>
+      <label class="inline hidden" id="missedTimeWrap">время события <input type="time" id="missedTime"></label>
+    </div>
+
+    <div class="save-row">
+      <input type="password" id="entryPin" class="hidden" placeholder="ПИН" inputmode="numeric" maxlength="8" autocomplete="off">
+      <button class="btn" type="button" id="btnClear">Очистить</button>
+      <button class="btn primary big" type="button" id="btnSave" disabled>Внести в журнал</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-head">
+      <h2>Записи журнала</h2>
+      <span class="muted" id="countLine"></span>
+    </div>
+    <div class="table-wrap" id="tableWrap">
+      <table class="journal">
+        <thead><tr><th>№</th><th>Дата</th><th>Время</th><th>Запись</th><th>Подпись</th><th></th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <div class="empty hidden" id="emptyLine">Записей пока нет. Примите смену, чтобы начать.</div>
+    </div>
+  </section>
+</main>
+
+<dialog id="dlgAccept">
+  <form class="dlg" method="dialog" id="formAccept">
+    <h3>Приём смены</h3>
+    <div><label class="field-label" for="accUser">Кто принимает смену</label><select id="accUser" required></select></div>
+    <div><label class="field-label" for="accPin">ПИН</label><input type="password" id="accPin" inputmode="numeric" maxlength="8" autocomplete="off" required></div>
+    <div class="err-line" id="accErr"></div>
+    <div class="actions"><button class="btn" value="cancel" formnovalidate>Отмена</button><button class="btn primary" id="accOk" value="ok">Принять смену</button></div>
+  </form>
+</dialog>
+
+<dialog id="dlgHandover">
+  <form class="dlg" method="dialog" id="formHandover">
+    <h3>Сдача смены</h3>
+    <div class="muted" id="hoFrom"></div>
+    <div><label class="field-label" for="hoFromPin">ПИН сдающего</label><input type="password" id="hoFromPin" inputmode="numeric" maxlength="8" autocomplete="off" required></div>
+    <div><label class="field-label" for="hoTo">Кто принимает смену</label><select id="hoTo" required></select></div>
+    <div><label class="field-label" for="hoToPin">ПИН принимающего</label><input type="password" id="hoToPin" inputmode="numeric" maxlength="8" autocomplete="off" required></div>
+    <div><label class="field-label" for="hoNote">Состояние оборудования, замечания (необязательно)</label><textarea id="hoNote" style="min-height:70px"></textarea></div>
+    <div class="err-line" id="hoErr"></div>
+    <div class="actions"><button class="btn" value="cancel" formnovalidate>Отмена</button><button class="btn primary" value="ok">Сдать смену</button></div>
+  </form>
+</dialog>
+
+<div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
+<script src="/static/journal.js"></script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Администрирование — Оперативный журнал</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+<header class="topbar">
+  <div>
+    <div class="brand-title">Администрирование</div>
+    <div class="brand-sub" id="adminLine">Вход по ПИН администратора</div>
+  </div>
+  <div class="top-actions">
+    <a class="btn ghost" href="/">К журналу</a>
+    <button class="btn ghost hidden" id="btnLogout" type="button">Выйти</button>
+  </div>
+</header>
+
+<section class="card login" id="loginCard">
+  <form id="loginForm" class="dlg" style="padding:0">
+    <h3>Вход администратора</h3>
+    <div><label class="field-label" for="adminPin">ПИН</label><input type="password" id="adminPin" inputmode="numeric" maxlength="8" autocomplete="off" required></div>
+    <div class="err-line" id="loginErr"></div>
+    <div class="actions"><button class="btn primary">Войти</button></div>
+  </form>
+</section>
+
+<div class="admin-wrap hidden" id="adminArea">
+  <section class="card">
+    <div class="card-head"><h2>Нормативные документы — основания форм</h2><button class="btn primary" id="btnCheckAll" type="button">Проверить все</button></div>
+    <p class="lead">Программа скачивает документ, сравнивает его текст с принятой редакцией и показывает изменения. Новую версию формы утверждает ответственный — сама программа формы не меняет.
+      Нет интернета на этом компьютере? Сохраните страницу документа на компьютере с интернетом и укажите путь к файлу, например <code>C:\Документы\pravila.html</code>.</p>
+    <table class="grid">
+      <thead><tr><th style="width:30%">Документ</th><th>Ссылка или путь к файлу</th><th style="width:22%">Последняя проверка</th><th style="width:150px"></th></tr></thead>
+      <tbody id="docRows"></tbody>
+    </table>
+    <div id="diffPanel" class="hidden" style="margin-top:16px">
+      <div class="card-head"><h2 id="diffTitle">Изменения</h2><button class="btn small" id="btnDiffClose" type="button">Скрыть</button></div>
+      <div id="diffRedactions"></div>
+      <div class="diff" id="diffBody"></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Шаблоны форм</h2>
+    <p class="lead">Каждая форма привязана к документам-основаниям и к приказу предприятия. Записи хранят версию формы, по которой сделаны, — при новой версии старые записи не переписываются.</p>
+    <div id="tplList" style="display:grid; gap:12px"></div>
+  </section>
+
+  <section class="card">
+    <h2>Работники</h2>
+    <p class="lead">ПИН заменяет подпись в прототипе. Для юридически значимого электронного журнала нужна электронная подпись и приказ предприятия о ведении журнала в электронном виде.</p>
+    <table class="grid"><thead><tr><th>ФИО</th><th>Должность</th><th>Роль</th></tr></thead><tbody id="userRows"></tbody></table>
+    <form id="userForm" class="form-row" style="margin-top:14px">
+      <div><label class="field-label" for="uFio">ФИО</label><input type="text" id="uFio" required></div>
+      <div><label class="field-label" for="uPos">Должность</label><input type="text" id="uPos"></div>
+      <div><label class="field-label" for="uRole">Роль</label><select id="uRole"><option value="operator">Дежурный</option><option value="admin">Администратор</option></select></div>
+      <div><label class="field-label" for="uPin">ПИН (4–8 цифр)</label><input type="password" id="uPin" inputmode="numeric" maxlength="8" required></div>
+      <div><button class="btn primary">Добавить</button></div>
+    </form>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><h2>Резервные копии</h2><button class="btn" id="btnBackup" type="button">Создать копию сейчас</button></div>
+    <table class="grid"><thead><tr><th>Файл</th><th>Создан</th><th>Размер</th></tr></thead><tbody id="backupRows"></tbody></table>
+  </section>
+
+  <section class="card">
+    <h2>Журнал действий администратора</h2>
+    <p class="lead">Записи здесь, как и в оперативном журнале, нельзя изменить или удалить.</p>
+    <table class="grid"><thead><tr><th style="width:170px">Когда</th><th style="width:170px">Кто</th><th>Действие</th></tr></thead><tbody id="auditRows"></tbody></table>
+  </section>
+</div>
+
+<div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
+<script src="/static/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "code": "oper_journal",
+  "name": "Оперативный журнал",
+  "version": "1.0",
+  "effective_from": "2026-11-06",
+  "approved_by_local_act": "Приказ предприятия № ___ от ___ (укажите реквизиты приказа, которым утверждена форма)",
+  "basis_docs": ["potu_903n", "pteep_811", "pp_757", "req_894"],
+  "note": "Типовая форма для прототипа. Замените графы на форму, утверждённую на вашем предприятии, и повысьте номер версии.",
+  "columns": [
+    {"key": "n", "title": "№ записи", "width": 9},
+    {"key": "date", "title": "Дата", "width": 12},
+    {"key": "time", "title": "Время", "width": 8},
+    {"key": "text", "title": "Содержание записи (события, команды и распоряжения, переключения, работы по нарядам и распоряжениям, приём и сдача смены)", "width": 72},
+    {"key": "signature", "title": "Подпись", "width": 24}
+  ],
+  "entry_kinds": [
+    {"code": "event", "label": "Событие"},
+    {"code": "switching", "label": "Переключение"},
+    {"code": "order", "label": "Команда, распоряжение"},
+    {"code": "work", "label": "Работа по наряду"},
+    {"code": "shift", "label": "Приём и сдача смены", "system": true},
+    {"code": "correction", "label": "Исправление", "system": true}
+  ],
+  "rules": {
+    "require_pin_per_entry": false,
+    "correction_only_current_shift": true
+  }
+}
